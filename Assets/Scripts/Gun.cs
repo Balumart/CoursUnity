@@ -19,13 +19,17 @@ public class Gun : MonoBehaviour
 
     public GameObject shootPoint;
 
-    // Start is called before the first frame update
+    public Animator animator;
+
+
     void Update()
     {
+        //gestion tir, cadence de tir, recul, animations
         cooldownSpeed += Time.deltaTime * 60f;
 
         if (Input.GetButton("Fire1"))
         {
+            animator.Play("shoot");
             accuracy += Time.deltaTime * 60f;
             if (cooldownSpeed >= fireRate)
             {
@@ -37,6 +41,7 @@ public class Gun : MonoBehaviour
         }
         else
         {
+            animator.Play("idle");
             recoilCooldown -= Time.deltaTime;
             if (recoilCooldown <= 1)
             {
@@ -46,13 +51,13 @@ public class Gun : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Shoot()
     {
         RaycastHit hit;
 
         Quaternion fireRotation = Quaternion.LookRotation(transform.forward);
 
+        //gestion du spread des balles
         float currentSpread = Mathf.Lerp(0.0f, maxSpreadAngle, accuracy / timeTillMaxSpread);
 
         fireRotation = Quaternion.RotateTowards(fireRotation, Random.rotation, Random.Range(0.0f, currentSpread));

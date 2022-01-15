@@ -10,27 +10,29 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundLayers;
     public CapsuleCollider col;
     public float life = 100;
-    Rigidbody rb;
-    
-    void OnApplicationFocus(bool hasFocus)
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-    }
 
-    // Start is called before the first frame update
+    public gameOverScreen gameOverScreen;
+
+    Rigidbody rb;
+
+    //tentative de gestion de score (manquée)
+    int kills = 0; 
+
     void Start()
     {
+        //cache le curseur
+        Cursor.lockState = CursorLockMode.Locked;
+
         if (playerCam == null)
         {
             Camera cam = transform.GetComponentInChildren<Camera>();
             playerCam = cam.transform;
         }
     }
-
     private void Update()
     {
         rb = GetComponent<Rigidbody>();
-        //Pour declock la souris
+        //Pour unlock la souris
         if (Input.GetKey(KeyCode.Escape)) 
         {
             Cursor.lockState = CursorLockMode.None;
@@ -54,23 +56,31 @@ public class PlayerMovement : MonoBehaviour
         q = Quaternion.AngleAxis(rot, transform.up);
         transform.rotation = q * transform.rotation;
 
+        //Saut
         if (isGrounded() && Input.GetButtonDown("Jump"))
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
+
+        //Est ce qu'on est mort ?
         if (life <= 0)
         {
-            Destroy(gameObject);
+            GameOver();
         }
     }
 
+        public void GameOver()
+    {
+        gameOverScreen.Setup(kills);
+    }
+
+   // Est ce qu'on touche le sol ?
     private bool isGrounded()
     {
         return Physics.CheckCapsule(col.bounds.center, new Vector3(col.bounds.center.x, col.bounds.min.y, col.bounds.center.z), col.radius * .5f, groundLayers);
 
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         

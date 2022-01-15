@@ -11,17 +11,15 @@ public class MoveBullet : MonoBehaviour
     public GameObject blood;
 
     public int speed;
-    // Start is called before the first frame update
+
+//vitesse et direction
     void Start()
     {
         this.GetComponent<Rigidbody>().AddForce((hitPoint - this.transform.position).normalized * speed);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+  
+    //collision
     void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.tag == "Enemy")

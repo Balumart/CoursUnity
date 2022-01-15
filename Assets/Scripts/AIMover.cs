@@ -13,7 +13,6 @@ public class AIMover : MonoBehaviour
     public float angularSpeed = 1;
 
     private Transform player;
-
     public Vector3 dirPlayer;
 
     public float life = 100;
@@ -26,6 +25,7 @@ public class AIMover : MonoBehaviour
 
     void FixedUpdate()
     {
+        //deplacements
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null)
         {
@@ -53,23 +53,19 @@ public class AIMover : MonoBehaviour
             }
         }
 
-
+        //mort
         if (life <= 0)
         {
-            Destroy(gameObject);
+               Destroy(gameObject);
         }
     }
 
+    //blesse le joueur
     void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.tag == "Player")
         {
             col.gameObject.GetComponent<PlayerMovement>().life -= 20;
         }
-    }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawLine(transform.position, transform.position + dirPlayer);
     }
 }

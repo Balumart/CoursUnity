@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Tooltip("sensibilité souris"), Range(1, 10)]
+    public float sensibilite = 3;
+
+
     public Transform playerCam;
     public float jumpForce = 10f;
     public float speed = 50;
@@ -41,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
         Quaternion lastRotation = playerCam.rotation;
 
         //Baisse / leve la tete
-        float rot = Input.GetAxis("Mouse Y") * -10;
+        float rot = Input.GetAxis("Mouse Y") * -sensibilite;
         Quaternion q = Quaternion.AngleAxis(rot, playerCam.right);
         playerCam.rotation = q * playerCam.rotation;
 
@@ -52,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
         if (regardeDevant < 0.0f)
             playerCam.rotation = lastRotation;
 
-        rot = Input.GetAxis("Mouse X") * 10;
+        rot = Input.GetAxis("Mouse X") * sensibilite;
         q = Quaternion.AngleAxis(rot, transform.up);
         transform.rotation = q * transform.rotation;
 

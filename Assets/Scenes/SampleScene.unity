@@ -489,6 +489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01d3494233ae3a24b86ce1b4c7e35a95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sensibilite: 3
   playerCam: {fileID: 414784705}
   jumpForce: 10
   speed: 50
@@ -498,7 +499,6 @@ MonoBehaviour:
   col: {fileID: 489818591}
   life: 100
   gameOverScreen: {fileID: 64974554}
-  kills: 0
 --- !u!4 &489818589
 Transform:
   m_ObjectHideFlags: 0
